@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/mongo:/data/db
+      - ./data/mongo-init:/docker-entrypoint-initdb.d
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=S2cret
+    container_name: mongo
+  fastapi:
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      volumes:
+        - './fastapi:/app'
+      ports:
+        - 8000:8000
+      environment:
+        MONGODB_HOST: mongo
+        MONGODB_PORT: 27017
+        MONGODB_USER: root
+        MONGODB_PASSWORD: S2cret
+        PYTHONPATH: /app
+      container_name: fastapi

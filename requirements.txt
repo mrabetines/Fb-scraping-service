@@ -1,0 +1,9 @@
+fastapi[all]
+uvicorn[standard]
+pymongo==4.1.1
+pydantic
+facebook-scraper==0.2.55
+pytest
+httpx
+trio
+
